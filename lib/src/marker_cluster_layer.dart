@@ -6,6 +6,7 @@ import 'package:flutter_map_marker_cluster/src/anim_type.dart';
 import 'package:flutter_map_marker_cluster/src/core/distance_grid.dart';
 import 'package:flutter_map_marker_cluster/src/core/quick_hull.dart';
 import 'package:flutter_map_marker_cluster/src/core/spiderfy.dart';
+import 'package:flutter_map_marker_cluster/src/marker_cluster_data_node.dart';
 import 'package:flutter_map_marker_cluster/src/marker_cluster_layer_options.dart';
 import 'package:flutter_map_marker_cluster/src/node/marker_cluster_node.dart';
 import 'package:flutter_map_marker_cluster/src/node/marker_node.dart';
@@ -287,7 +288,7 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
     return results;
   }
 
-  List<Marker> getClusterMarkers(MarkerClusterNode cluster) =>
+  List<MarkerData<dynamic>> getClusterMarkers(MarkerClusterNode cluster) =>
       cluster.markers.map((node) => node.marker).toList();
 
   Size getClusterSize(MarkerClusterNode cluster) =>
@@ -596,6 +597,10 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
       if (_zoomController.isAnimating ||
           _centerMarkerController.isAnimating ||
           _fitBoundController.isAnimating) return null;
+
+      if (widget.options.markerSelected != null && marker.child != null) {
+        widget.options.markerSelected(context, marker.child);
+      }
 
       if (!widget.options.centerMarkerOnClick) return null;
 

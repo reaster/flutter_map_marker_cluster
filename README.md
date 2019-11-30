@@ -12,6 +12,17 @@ This is a plugin for [flutter_map](https://github.com/johnpryan/flutter_map) pac
 </td>
 </tr></table></div>
 
+## Fork Modifications
+
+Added markerSelected callback and a MarkerData\<T\> class: 
+
+```dart
+  MarkerData<String>(
+      data: 'Paris',
+      point: LatLng(53.3488, -6.2613),
+  )
+```
+
 ## Usage
 
 Add flutter_map and  flutter_map_marker_cluster to your pubspec:
@@ -38,6 +49,7 @@ Add it in you FlutterMap and configure it using `MarkerClusterGroupLayerOptions`
           subdomains: ['a', 'b', 'c'],
         ),
         MarkerClusterLayerOptions(
+          markerSelected: (_, marker) => print("{marker.data}",
           maxClusterRadius: 120,
           size: Size(40, 40),
           fitBoundsOptions: FitBoundsOptions(

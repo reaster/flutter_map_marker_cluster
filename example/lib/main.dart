@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:flutter_map_marker_cluster/src/marker_cluster_data_node.dart';
 import 'package:latlong/latlong.dart';
 
 void main() => runApp(MyApp());
@@ -25,7 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Marker> markers;
+  List<MarkerData<String>> markers;
   int pointIndex;
   List points = [
     LatLng(51.5, -0.09),
@@ -36,49 +37,55 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     pointIndex = 0;
     markers = [
-      Marker(
+      MarkerData<String>(
+        data: "${points[pointIndex].latitude}, ${points[pointIndex].longitude}",
         anchorPos: AnchorPos.align(AnchorAlign.center),
         height: 30,
         width: 30,
         point: points[pointIndex],
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-      Marker(
+      MarkerData<String>(
+        data: '53.3498, -6.2603',
         anchorPos: AnchorPos.align(AnchorAlign.center),
         height: 30,
         width: 30,
         point: LatLng(53.3498, -6.2603),
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-      Marker(
+      MarkerData<String>(
+        data: '53.3488, -6.2613',
         anchorPos: AnchorPos.align(AnchorAlign.center),
         height: 30,
         width: 30,
         point: LatLng(53.3488, -6.2613),
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-      Marker(
+      MarkerData<String>(
+        data: '53.3488, -6.2613',
         anchorPos: AnchorPos.align(AnchorAlign.center),
         height: 30,
         width: 30,
         point: LatLng(53.3488, -6.2613),
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-      Marker(
+      MarkerData<String>(
+        data: '48.8566, 2.3522',
         anchorPos: AnchorPos.align(AnchorAlign.center),
         height: 30,
         width: 30,
         point: LatLng(48.8566, 2.3522),
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-      Marker(
+      MarkerData<String>(
+        data: '49.8566, 3.3522',
         anchorPos: AnchorPos.align(AnchorAlign.center),
         height: 30,
         width: 30,
         point: LatLng(49.8566, 3.3522),
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-    ];
+     ];
 
     super.initState();
   }
@@ -94,7 +101,8 @@ class _HomePageState extends State<HomePage> {
             pointIndex = 0;
           }
           setState(() {
-            markers[0] = Marker(
+            markers[0] = MarkerData<String>(
+              data: "${points[pointIndex].latitude}, ${points[pointIndex].longitude}",
               point: points[pointIndex],
               anchorPos: AnchorPos.align(AnchorAlign.center),
               height: 30,
@@ -123,6 +131,7 @@ class _HomePageState extends State<HomePage> {
             subdomains: ['a', 'b', 'c'],
           ),
           MarkerClusterLayerOptions(
+            markerSelected: (context, marker) => _markerSelected(context, marker),            
             maxClusterRadius: 120,
             size: Size(40, 40),
             anchor: AnchorPos.align(AnchorAlign.center),
@@ -144,5 +153,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+  void _markerSelected(BuildContext context, MarkerData<String> marker) {
+    //final record = recordMap[marker.point];
+    final data = marker.data;
+    print("marker($data)");
   }
 }

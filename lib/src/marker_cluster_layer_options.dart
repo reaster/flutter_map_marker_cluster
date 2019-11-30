@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map_marker_cluster/src/marker_cluster_data_node.dart';
 
 class PolygonOptions {
   final Color color;
@@ -19,20 +20,23 @@ class PolygonOptions {
 }
 
 typedef ClusterWidgetBuilder = Widget Function(
-    BuildContext context, List<Marker> markers);
+    BuildContext context, List<MarkerData<dynamic>> markers);
+
+typedef MarkerSelectedCallback = void Function(BuildContext context, MarkerData<dynamic> marker);
+
 
 class MarkerClusterLayerOptions extends LayerOptions {
   /// Cluster builder
   final ClusterWidgetBuilder builder;
 
   /// List of markers
-  final List<Marker> markers;
+  final List<MarkerData<dynamic>> markers;
 
   /// Cluster size
   final Size size;
 
   /// Cluster compute size
-  final Size Function(List<Marker>) computeSize;
+  final Size Function(List<MarkerData<dynamic>>) computeSize;
 
   /// Cluster anchor
   final AnchorPos anchor;
@@ -51,6 +55,9 @@ class MarkerClusterLayerOptions extends LayerOptions {
 
   /// When click marker, center it with animation
   final bool centerMarkerOnClick;
+
+  /// Click marker optional callback function
+  final MarkerSelectedCallback markerSelected;
 
   /// Increase to increase the distance away that circle spiderfied markers appear from the center
   final int spiderfyCircleRadius;
@@ -83,6 +90,7 @@ class MarkerClusterLayerOptions extends LayerOptions {
         const FitBoundsOptions(padding: EdgeInsets.all(12.0)),
     this.zoomToBoundsOnClick = true,
     this.centerMarkerOnClick = true,
+    this.markerSelected,
     this.spiderfyCircleRadius = 40,
     this.spiderfySpiralDistanceMultiplier = 1,
     this.circleSpiralSwitchover = 9,

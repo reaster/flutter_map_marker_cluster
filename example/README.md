@@ -1,6 +1,6 @@
 # flutter_map_marker_cluster_example
 
-A new Flutter project.
+A flutter map marker cluster example with String data types attached to markers.
 
 ## Getting Started
 
