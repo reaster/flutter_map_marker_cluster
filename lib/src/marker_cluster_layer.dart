@@ -256,6 +256,7 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
           child: widget.options.builder(
             context,
             cluster.markers.map((node) => node.marker).toList(),
+            cluster.point,
           ),
         ),
         builder: (BuildContext context, Widget child) {
@@ -316,10 +317,8 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: _onClusterTap(cluster),
-        child: widget.options.builder(
-          context,
-          getClusterMarkers(cluster),
-        ),
+        child: widget.options
+            .builder(context, getClusterMarkers(cluster), cluster.point),
       ),
       builder: (BuildContext context, Widget child) {
         return Positioned(
@@ -599,7 +598,7 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
           _fitBoundController.isAnimating) return null;
 
       if (widget.options.markerSelected != null && marker.child != null) {
-        widget.options.markerSelected(context, marker.child);
+        widget.options.markerSelected(context, marker.child, marker.point);
       }
 
       if (!widget.options.centerMarkerOnClick) return null;

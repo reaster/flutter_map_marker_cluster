@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
         point: LatLng(49.8566, 3.3522),
         builder: (ctx) => Icon(Icons.pin_drop),
       ),
-     ];
+    ];
 
     super.initState();
   }
@@ -102,7 +102,8 @@ class _HomePageState extends State<HomePage> {
           }
           setState(() {
             markers[0] = MarkerData<String>(
-              data: "${points[pointIndex].latitude}, ${points[pointIndex].longitude}",
+              data:
+                  "${points[pointIndex].latitude}, ${points[pointIndex].longitude}",
               point: points[pointIndex],
               anchorPos: AnchorPos.align(AnchorAlign.center),
               height: 30,
@@ -131,7 +132,8 @@ class _HomePageState extends State<HomePage> {
             subdomains: ['a', 'b', 'c'],
           ),
           MarkerClusterLayerOptions(
-            markerSelected: (context, marker) => _markerSelected(context, marker),            
+            markerSelected: (context, marker, point) =>
+                _markerSelected(context, marker),
             maxClusterRadius: 120,
             size: Size(40, 40),
             anchor: AnchorPos.align(AnchorAlign.center),
@@ -143,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                 borderColor: Colors.blueAccent,
                 color: Colors.black12,
                 borderStrokeWidth: 3),
-            builder: (context, markers) {
+            builder: (context, markers, point) {
               return FloatingActionButton(
                 child: Text(markers.length.toString()),
                 onPressed: null,
@@ -154,6 +156,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   void _markerSelected(BuildContext context, MarkerData<String> marker) {
     //final record = recordMap[marker.point];
     final data = marker.data;
