@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/src/marker_cluster_data_node.dart';
+import 'package:latlong/latlong.dart';
 
 class PolygonOptions {
   final Color color;
@@ -20,10 +21,10 @@ class PolygonOptions {
 }
 
 typedef ClusterWidgetBuilder = Widget Function(
-    BuildContext context, List<MarkerData<dynamic>> markers);
+    BuildContext context, List<Marker> markers, LatLng point);
 
-typedef MarkerSelectedCallback = void Function(BuildContext context, MarkerData<dynamic> marker);
-
+typedef MarkerSelectedCallback = void Function(
+    BuildContext context, MarkerData<dynamic> marker, LatLng point);
 
 class MarkerClusterLayerOptions extends LayerOptions {
   /// Cluster builder
