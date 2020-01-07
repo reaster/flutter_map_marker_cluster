@@ -317,8 +317,11 @@ class _MarkerClusterLayerState extends State<MarkerClusterLayer>
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: _onClusterTap(cluster),
-        child: widget.options
-            .builder(context, getClusterMarkers(cluster), cluster.point),
+        child: widget.options.builder(
+          context,
+          getClusterMarkers(cluster),
+          cluster.point,
+        ),
       ),
       builder: (BuildContext context, Widget child) {
         return Positioned(
